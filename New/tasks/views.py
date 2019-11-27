@@ -5,11 +5,25 @@ from .forms import TaskForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+import Trata
+
 
 @login_required
 def taskList(request):
 
+    user_login = Trata.read_sql2()
+    print('\n\n\n')
+    print('--------------->', user_login.username)
+    print('\n\n\n')
+
+    #who_login = Trata.read_sql3()
+    #print('\n\n\n')
+    #print('--------------->', who_login)
+    #print('\n\n\n')
+
     search = request.GET.get('search')
+
+
     if search:
         tasks = Task.objects.filter(title__icontains=search)
     else:
@@ -68,8 +82,9 @@ def deleteTask(request, id):
 
 
 #Testes
-def yourName(request, name):
-    return render(request, 'tasks/yourname.html', {'name': name})
+def yourName(request):
+
+    return render(request, 'tasks/list.html', {'name': name})
 
 
 def helloworld(request):
